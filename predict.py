@@ -7,17 +7,6 @@ Created on Wed May 29 12:57:12 2019
 @author: Timothy.Whalen
 """
 
-#%% Import Datasets
-import pandas as pd
-import os
-train = pd.read_csv(os.path.join(os.getcwd(), 'input\\train.csv'))
-test = pd.read_csv(os.path.join(os.getcwd(), 'input\\test.csv'))
-
-#%% Variables missing a lot of data
-#Find the % of records for a variable missing data
-#_null = train.isnull().sum().sort_values(ascending=False)  / train.shape[0]
-#_null_col = _null[_null > 0]#.index.to_list() #columns mising more then 40%
-
 
 #%% Create Dummy Variables
 tc = train.columns.to_list() #list of column names
