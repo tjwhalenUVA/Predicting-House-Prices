@@ -5,12 +5,13 @@ Created on Thu May 30 16:40:30 2019
 @author: Timothy.Whalen
 """
 #%% Import user modules
-import _dataImport
+import _data
 
 #%% Import libraries for remaing analysis
+import pandas as pd
 
 #%% Get the data
-train, test = _dataImport.get_data()
+train, test = _data.get_data()
 
 #%% Missing Values
 #Find the % of records for a variable missing data
@@ -43,9 +44,8 @@ train['LotFrontage'].unique() #Continuous variable, look to fill with an average
 #Code below fills NAN values in LF with grouped values by neighborhood
 train['LotFrontage'] = train.groupby('Neighborhood').transform(lambda x: x.fillna(x.mean()))
 
-
-
-
-
-
+#%% Finding correlated values to Sales Price
+_cat_c, _num_c = _data.get_col_list(train)
+#Calc corr to SalesPrice on all columns
+_corr = train[_num_c].corr()[['SalePrice']].reset_index().sort_values('SalePrice', ascending=False)
 
