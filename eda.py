@@ -20,14 +20,32 @@ _null[_null > 0.1].plot('barh')
 
 #PoolQC
 train['PoolQC'].unique() #4 levels, one is nan, fill with 'None'
+train['PoolQC'] = train.PoolQC.fillna('None')
 
 #MiscFeature
 train['MiscFeature'].unique() #5 levels, one is nan, fill with 'None'
+train['MiscFeature'] = train.MiscFeature.fillna('None')
 
 #Alley
+train['Alley'].unique() #3 levels, one is nan, fill with 'None'
+train['Alley'] = train.Alley.fillna('None')
 
 #Fence
+train['Fence'].unique() #5 levels, one is nan, fill with 'None'
+train['Fence'] = train.Fence.fillna('None')
 
 #FireplaceQu
+train['FireplaceQu'].unique() #5 levels, one is nan, fill with 'None'
+train['FireplaceQu'] = train.FireplaceQu.fillna('None')
 
 #LotFrontage
+train['LotFrontage'].unique() #Continuous variable, look to fill with an average
+#Code below fills NAN values in LF with grouped values by neighborhood
+train['LotFrontage'] = train.groupby('Neighborhood').transform(lambda x: x.fillna(x.mean()))
+
+
+
+
+
+
+
