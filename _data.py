@@ -14,13 +14,13 @@ def get_data():
     return(train, test)
 
 #%%Clean up missing values
-def fill_missing(df):
-    df['PoolQC'] = df.PoolQC.fillna('None')
-    df['MiscFeature'] = df.MiscFeature.fillna('None')
-    df['Alley'] = df.Alley.fillna('None')
-    df['Fence'] = df.Fence.fillna('None')
-    df['FireplaceQu'] = df.FireplaceQu.fillna('None')
-    df['LotFrontage'] = df.groupby('Neighborhood').transform(lambda x: x.fillna(x.mean()))
+def fill_missing(df, _null_list):
+    for c in _null_list.index:
+        if str(df[c].dtype) == 'object':
+            df[c] = df[c].fillna('None')
+        else:
+            df[c] = df.groupby('Neighborhood').transform(lambda x: x.fillna(x.mean()))
+    
     return(df)
 
 #%%List of columns by type
