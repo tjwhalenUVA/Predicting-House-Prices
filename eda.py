@@ -13,28 +13,21 @@ import pandas as pd
 #%% Get the data
 train, test = _data.get_data()
 
-#%% Missing Values
-#Find the % of records for a variable missing data
-_null = train.isnull().sum().sort_values(ascending=False)  / train.shape[0]
+#%% Find the % of records for a variable missing data
+_null_train = train.isnull().sum().sort_values(ascending=False)  / train.shape[0]
+_null_test = test.isnull().sum().sort_values(ascending=False)  / test.shape[0]
+
+#%% Columns that should be removed?
 #Plot shows the features missing more than 10% of records
-_null[_null > 0.1].plot('barh')
+_null_train[_null_train > 0.5].plot('barh')
+_null_test[_null_test > 0.5].plot('barh') #Same features missing from test set
+#4 features that are null in over 90% of records; drop for now
+_null_train[_null_train > 0.5].index
+#Drop Fence quality, Alley entrance type, Miscellaneous Features, Pool Quality
+train = train.drop(['Fence', 'Alley', 'MiscFeature', 'PoolQC'], axis=1)
+test = test.drop(['Fence', 'Alley', 'MiscFeature', 'PoolQC'], axis=1)
 
-#PoolQC
-train['PoolQC'].unique() #4 levels, one is nan, fill with 'None'
-train['PoolQC'] = train.PoolQC.fillna('None')
-
-#MiscFeature
-train['MiscFeature'].unique() #5 levels, one is nan, fill with 'None'
-train['MiscFeature'] = train.MiscFeature.fillna('None')
-
-#Alley
-train['Alley'].unique() #3 levels, one is nan, fill with 'None'
-train['Alley'] = train.Alley.fillna('None')
-
-#Fence
-train['Fence'].unique() #5 levels, one is nan, fill with 'None'
-train['Fence'] = train.Fence.fillna('None')
-
+#%% Fill Missing Values on Additional Columns
 #FireplaceQu
 train['FireplaceQu'].unique() #5 levels, one is nan, fill with 'None'
 train['FireplaceQu'] = train.FireplaceQu.fillna('None')
