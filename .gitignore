@@ -110,3 +110,6 @@ venv.bak/
 # R Stuff
 .Rhistory
 *.Rproj
+
+#Code Workspace
+house-prices.code-workspace
