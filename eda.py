@@ -5,13 +5,13 @@ Created on Thu May 30 16:40:30 2019
 @author: Timothy.Whalen
 """
 #%% Import user modules
-import _data
+import helper_functions
 
 #%% Import libraries for remaing analysis
 import pandas as pd
 
 #%% Get the data
-train, test = _data.get_data()
+train, test = helper_functions.load_housing_data()
 
 #%% Find the % of records for a variable missing data
 _null_train = train.isnull().sum().sort_values(ascending=False)  / train.shape[0]
